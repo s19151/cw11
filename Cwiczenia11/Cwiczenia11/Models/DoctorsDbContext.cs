@@ -97,6 +97,8 @@ namespace Cwiczenia11.Models
 
                 builder.Property(p => p.Details).IsRequired();
             });
+
+            modelBuilder.Seed();
         }
 
     }
