@@ -14,7 +14,7 @@ namespace Cwiczenia11.Services
 
         public DoctorResponse AddDoctor(AddDoctorRequest request);
 
-        public DoctorResponse ModifyDoctor(ModifyDoctorRequest request);
+        public DoctorResponse ModifyDoctor(int id, ModifyDoctorRequest request);
 
         public DoctorResponse DeleteDoctor(int id);
     }

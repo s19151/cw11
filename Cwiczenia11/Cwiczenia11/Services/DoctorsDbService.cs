@@ -19,22 +19,92 @@ namespace Cwiczenia11.Services
 
         public DoctorResponse AddDoctor(AddDoctorRequest request)
         {
-            throw new NotImplementedException();
+            var response = new DoctorResponse();
+
+            var doctor = _dbContext.Doctors.Add(new Doctor()
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email
+            })
+            .Entity;
+
+            if (doctor != null)
+            {
+                _dbContext.SaveChanges();
+
+                response.IdDoctor = doctor.IdDoctor;
+                response.FirstName = doctor.FirstName;
+                response.LastName = doctor.LastName;
+                response.Email = doctor.Email;
+            }
+
+            else
+                _dbContext.Remove(doctor);
+
+            return response;
         }
 
         public DoctorResponse GetDoctor(int id)
         {
-            throw new NotImplementedException();
+            var response = new DoctorResponse();
+
+            var doctor = _dbContext.Doctors.Find(id);
+            if (doctor != null)
+            {
+                response.IdDoctor = doctor.IdDoctor;
+                response.FirstName = doctor.FirstName;
+                response.LastName = doctor.LastName;
+                response.Email = doctor.Email;
+            }
+
+            return response;
         }
 
-        public DoctorResponse ModifyDoctor(ModifyDoctorRequest request)
+        public DoctorResponse ModifyDoctor(int id, ModifyDoctorRequest request)
         {
-            throw new NotImplementedException();
+            var response = new DoctorResponse();
+
+            var doctor = _dbContext.Doctors.Find(id);
+
+            if (request.FirstName != null)
+                doctor.FirstName = request.FirstName;
+
+            if (request.LastName != null)
+                doctor.LastName = request.LastName;
+
+            if (request.Email != null)
+                doctor.Email = request.Email;
+
+            _dbContext.SaveChanges();
+
+            response.IdDoctor = doctor.IdDoctor;
+            response.FirstName = doctor.FirstName;
+            response.LastName = doctor.LastName;
+            response.Email = doctor.Email;
+
+            return response;
         }
 
         public DoctorResponse DeleteDoctor(int id)
         {
-            throw new NotImplementedException();
+            var response = new DoctorResponse();
+
+            var doctor = _dbContext.Doctors.Find(id);
+
+            if (doctor != null)
+            {
+                _dbContext.Doctors.Remove(doctor);
+
+                response.IdDoctor = doctor.IdDoctor;
+                response.FirstName = doctor.FirstName;
+                response.LastName = doctor.LastName;
+                response.Email = doctor.Email;
+
+                _dbContext.SaveChanges();
+            }
+
+            return response;
         }
     }
 }

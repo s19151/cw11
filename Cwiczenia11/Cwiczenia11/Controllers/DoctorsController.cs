@@ -14,9 +14,9 @@ namespace Cwiczenia11.Controllers
     [ApiController]
     public class DoctorsController : ControllerBase
     {
-        private readonly DoctorsDbService _dbService;
+        private readonly IDbService _dbService;
 
-        public DoctorsController(DoctorsDbService dbService)
+        public DoctorsController(IDbService dbService)
         {
             _dbService = dbService;
         }
@@ -43,10 +43,10 @@ namespace Cwiczenia11.Controllers
             return BadRequest();
         }
 
-        [HttpPost("modify")]
-        public IActionResult ModifyDoctor(ModifyDoctorRequest request)
+        [HttpPost("{id:int}/modify")]
+        public IActionResult ModifyDoctor(int id, ModifyDoctorRequest request)
         {
-            var response = _dbService.ModifyDoctor(request);
+            var response = _dbService.ModifyDoctor(id, request);
 
             if(response != null)
                 return Ok(response);
@@ -54,7 +54,7 @@ namespace Cwiczenia11.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("delete/id:int")]
+        [HttpDelete("{id:int}/delete")]
         public IActionResult DeleteDoctor(int id)
         {
             var response = _dbService.DeleteDoctor(id);
